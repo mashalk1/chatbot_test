@@ -3,7 +3,7 @@ from typing import Dict, List, Any
 
 router = APIRouter()
 
-# Sample plant database with Dutch values but English keys for frontend compatibility
+# Sample plant database with English values but maintaining database structure
 PLANT_DATABASE = [
     {"name": "Sansevieria", "location": "indoor", "size": "medium", "style": "modern", "image": "image5.png"},
     {"name": "Ficus Lyrata", "location": "indoor", "size": "large", "style": "minimalist", "image": "image8.png"},
