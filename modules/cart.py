@@ -50,4 +50,3 @@ def remove_from_cart(product_id: int):
 
     del cart[product_id]
     return {"message": "Product removed from cart.", "cart": cart}
-
