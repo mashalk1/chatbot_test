@@ -1,41 +1,44 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Neverleafs Chatbot</title>
+  <title>Artificial Plants Chatbot</title>
   <!-- Import Montserrat from Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     /* --- Color Variables (unchanged) --- */
     :root {
-      --chat-bg: #fdfaef;           
-      --border-color: #40442e;       
-      --header-bg: #40442e;          
-      --header-text: #fdfaef;        
-      --button-bg: #fdfaef;          
-      --button-text: #40442e;        
-      --button-border: #40442e;      
-      --button-hover-bg: #40442e;     
-      --button-hover-text: #fdfaef;   
-      --button-hover-border: #fdfaef; 
+      --chat-bg: #fdfaef;
+      --border-color: #40442e;
+      --header-bg: #40442e;
+      --header-text: #fdfaef;
+      --button-bg: #fdfaef;
+      --button-text: #40442e;
+      --button-border: #40442e;
+      --button-hover-bg: #40442e;
+      --button-hover-text: #fdfaef;
+      --button-hover-border: #fdfaef;
       --input-bg: #fdfaef;
       --input-border: #40442e;
       --shadow: rgba(0, 0, 0, 0.15);
       --font-family: 'Montserrat', sans-serif;
     }
-    
+
     /* --- Global Reset & Base Font Size --- */
     * {
       box-sizing: border-box;
     }
-    html, body {
+
+    html,
+    body {
       height: 100%;
       margin: 0;
       font-family: var(--font-family);
       font-size: 1rem;
       background: var(--chat-bg);
     }
-    
+
     /* --- Chat Launcher --- */
     #chat-launcher {
       width: 70vw;
@@ -50,6 +53,7 @@
       justify-content: center;
       align-items: center;
     }
+
     /* Launcher message styling with creative gradient and reduced font size */
     #chat-launcher .launcher-message {
       background: linear-gradient(135deg, #e8e6e1, #fdfaef);
@@ -62,6 +66,7 @@
       box-shadow: 0 4px 8px var(--shadow);
       max-width: 80%;
     }
+
     #chat-launcher button {
       border: 2px solid var(--button-border);
       border-radius: 10px;
@@ -72,19 +77,21 @@
       color: var(--button-text);
       transition: background-color 0.3s, color 0.3s, border 0.3s, transform 0.2s;
     }
+
     #chat-launcher button:hover {
       background-color: var(--button-hover-bg);
       color: var(--button-hover-text);
       border: 2px solid var(--button-hover-border);
       transform: translateY(-2px);
     }
-    
+
     /* --- Chat Container (Conversation) --- */
     .chat-container {
       width: 70vw;
       height: 86vh;
       margin: 5vh 15vw;
-      display: none; /* Initially hidden */
+      display: none;
+      /* Initially hidden */
       flex-direction: column;
       background: var(--chat-bg);
       border: 1px solid var(--border-color);
@@ -92,7 +99,7 @@
       overflow: hidden;
       box-shadow: 0 8px 20px var(--shadow);
     }
-    
+
     /* --- Creative Chat Header --- */
     .chat-header {
       background: linear-gradient(135deg, var(--header-bg), #2c2c2c);
@@ -102,11 +109,12 @@
       flex: 0 0 auto;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
+
     .chat-header p {
       font-size: 0.9rem;
       margin-top: 5px;
     }
-    
+
     /* --- Chat Window --- */
     .chat-window {
       flex: 1;
@@ -114,7 +122,7 @@
       padding: 15px;
       background: var(--chat-bg);
     }
-    
+
     /* --- Module Container --- */
     .module-container {
       display: none;
@@ -127,23 +135,25 @@
       max-height: 64vh;
       overflow-y: auto;
     }
+
     .module-container h1,
     .module-container h2,
     .module-container h3 {
       color: var(--border-color);
     }
+
     .module-container p {
       white-space: normal;
       word-break: break-word;
     }
-    
+
     /* --- Footer --- */
     .chat-footer {
       background: var(--chat-bg);
       padding: 10px;
       flex: 0 0 auto;
     }
-    
+
     /* --- Button Styles (unchanged) --- */
     button {
       border: 2px solid var(--button-border);
@@ -155,13 +165,14 @@
       color: var(--button-text);
       transition: background-color 0.3s, color 0.3s, border 0.3s, transform 0.2s;
     }
+
     button:hover {
       background-color: var(--button-hover-bg);
       color: var(--button-hover-text);
       border: 2px solid var(--button-hover-border);
       transform: translateY(-2px);
     }
-    
+
     .module-buttons {
       display: flex;
       justify-content: center;
@@ -169,7 +180,7 @@
       gap: 10px;
       margin-bottom: 10px;
     }
-    
+
     /* --- Input Fields --- */
     input[type="text"] {
       width: 100%;
@@ -181,31 +192,35 @@
       color: var(--input-border);
       transition: box-shadow 0.3s ease;
     }
+
     input[type="text"]:focus {
       border-color: var(--input-border);
       outline: none;
       box-shadow: 0 0 10px var(--border-color);
     }
-    
+
     /* (Removed the old "display: inline-block; width: fit-content;" rule to avoid shrinking) */
-    
+
     .find-plant-form input[type="text"] {
       width: 400px;
     }
-    
+
     /* --- Chat Input Area with Embedded Search Icon --- */
     .chat-input-area {
       display: flex;
       gap: 10px;
       align-items: center;
     }
+
     .input-container {
       position: relative;
       flex: 1;
     }
+
     .input-container input[type="text"] {
       padding-right: 50px;
     }
+
     .search-icon {
       position: absolute;
       right: 15px;
@@ -215,13 +230,14 @@
       width: 24px;
       height: 24px;
     }
-    
+
     /* --- Chat Message Styles (unchanged) --- */
     .chat-message {
       margin: 10px 0;
       display: flex;
       align-items: flex-start;
     }
+
     .chat-message p {
       margin: 0;
       padding: 12px 15px;
@@ -229,38 +245,43 @@
       max-width: 80%;
       line-height: 1.4;
     }
+
     .bot-message p {
       background-color: #BDC3C7;
       color: var(--border-color);
       align-self: flex-start;
     }
+
     .user-message {
       margin-left: auto;
       text-align: right;
       display: flex;
       justify-content: flex-end;
     }
+
     .user-message p {
       background-color: var(--header-bg);
       color: var(--header-text);
       align-self: flex-end;
     }
-    
-    /* --- Module-Specific Styles (unchanged) --- */
+/* --- Module-Specific Styles (unchanged) --- */
     .category-select {
       margin-bottom: 25px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
+
     .category-select label {
       font-size: 1rem;
       color: var(--border-color);
     }
+
     .browse-desc {
       margin-bottom: 15px;
       color: var(--border-color);
     }
+
     .carousel-container {
       display: flex;
       overflow-x: auto;
@@ -269,13 +290,16 @@
       flex-wrap: nowrap;
       justify-content: flex-start;
     }
+
     .carousel-container::-webkit-scrollbar {
       height: 8px;
     }
+
     .carousel-container::-webkit-scrollbar-thumb {
       background: var(--border-color);
       border-radius: 4px;
     }
+
     .product-card {
       background: var(--chat-bg);
       border: 1px solid var(--border-color);
@@ -287,16 +311,20 @@
       flex-direction: column;
       transition: transform 0.2s;
     }
+
     .product-card:hover {
       transform: translateY(-4px);
     }
+
     .product-card img {
       width: 100%;
-      height: 330px; /* Height decreased by 30px from the original 360px */
+      height: 330px;
+      /* Height decreased by 30px from the original 360px */
       object-fit: cover;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }
+
     .product-info {
       padding: 10px;
       flex-grow: 1;
@@ -304,25 +332,28 @@
       white-space: normal;
       word-break: break-word;
     }
+
     .product-info h3 {
       margin: 5px 0;
       font-size: 1.1rem;
       white-space: normal;
       word-break: break-word;
     }
+
     .product-info p {
       margin: 4px 0;
       font-size: 0.9rem;
       white-space: normal;
       word-break: break-word;
     }
+
     .actions {
       padding: 10px;
       display: flex;
       justify-content: space-around;
       border-top: 1px solid var(--border-color);
     }
-    
+
     .find-plant-form {
       width: 100%;
       display: flex;
@@ -330,14 +361,17 @@
       gap: 15px;
       margin-bottom: 20px;
     }
+
     .findplant-desc {
       margin-bottom: 15px;
       color: var(--border-color);
     }
+
     /* --- Updated Find Perfect Plant View: Single Field --- */
     .find-plant-form.single-field input[type="text"] {
       width: 100%;
     }
+
     .find-plant-results {
       display: flex;
       flex-wrap: wrap;
@@ -345,6 +379,7 @@
       justify-content: center;
       margin-top: 20px;
     }
+
     .plant-card {
       background: var(--chat-bg);
       border: 1px solid var(--border-color);
@@ -358,9 +393,11 @@
       text-align: center;
       padding-bottom: 10px;
     }
+
     .plant-card:hover {
       transform: translateY(-4px);
     }
+
     .plant-card img {
       width: 100%;
       height: 150px;
@@ -368,15 +405,17 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }
+
     .plant-info {
       padding: 10px;
       color: var(--border-color);
     }
+
     .plant-info h3 {
       margin: 5px 0;
       font-size: 1.1rem;
     }
-    
+
     /* --- Maintenance Input Field Update --- */
     .maintenance-input {
       width: 500px;
@@ -389,78 +428,100 @@
       color: var(--border-color);
       transition: border-color 0.3s;
     }
+
     .maintenance-input:focus {
       border-color: var(--input-border);
       outline: none;
     }
-    
+
     /* --- Responsive Media Queries --- */
     @media (max-width: 1024px) {
-      #chat-launcher, .chat-container {
+
+      #chat-launcher,
+      .chat-container {
         width: 90vw;
         margin: 5vh auto;
       }
+
       .carousel-container {
         gap: 10px;
       }
+
       .product-card {
         width: 200px;
       }
     }
-    
+
     @media (max-width: 768px) {
-      #chat-launcher, .chat-container {
+
+      #chat-launcher,
+      .chat-container {
         width: 95vw;
         margin: 2vh auto;
       }
+
       .chat-window {
         padding: 10px;
       }
+
       .module-container {
         width: 95%;
         margin: 5px auto;
       }
+
       input[type="text"] {
         font-size: 0.9rem;
       }
+
       .find-plant-form input[type="text"] {
         width: 100%;
       }
+
       /* Make sure maintenance input also fits on smaller tablets */
       .maintenance-input {
         width: 100%;
       }
     }
-    
+
     @media (max-width: 480px) {
-      #chat-launcher, .chat-container {
+
+      #chat-launcher,
+      .chat-container {
         width: 98vw;
         margin: 0;
         height: 100vh;
         border-radius: 0;
         box-shadow: none;
       }
-      .chat-header, .chat-footer {
+
+      .chat-header,
+      .chat-footer {
         padding: 10px;
       }
+
       .launcher-message {
         font-size: 1rem;
         padding: 10px;
       }
+
       button {
         padding: 10px 20px;
         font-size: 0.8rem;
       }
+
       .product-card {
         width: 90%;
       }
+
       .product-card img {
         height: 250px;
       }
+
       .carousel-container {
         flex-direction: column;
         overflow-x: hidden;
       }
+
       /* Maintenance input full width on mobile */
       .maintenance-input {
         width: 100%;
@@ -468,56 +529,59 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Chat Launcher Section (Visible when conversation is closed) -->
   <div id="chat-launcher">
     <div class="launcher-message">
-      Heb je vragen voor ons? Vraag nu direct!
+      Have some questions for us? Ask right now!
     </div>
-    <button onclick="openConversation()">Chat starten</button>
+    <button onclick="openConversation()">Open Chat</button>
   </div>
-  
+
   <!-- Chat Conversation Container (Initially hidden) -->
   <div class="chat-container" id="chat-container">
     <!-- Creative Chat Header -->
     <header class="chat-header">
-      <h1>Neverleafs Chatbot</h1>
-      <p>Altijd klaar om te helpen – ontdek onze wereld van kunstplanten!</p>
+      <h1>Artificial Plants Chatbot</h1>
+      <p>Always ready to help – discover our world of artificial plants!</p>
     </header>
-    
+
     <!-- Chat Window -->
     <div class="chat-window" id="chat-window">
       <div class="chat-message bot-message">
-        <p><span class="icon">🍃</span> Hey daar! Welkom bij NeverLeafs! Ik ben Leafie, jouw persoonlijke assistant. Waar kan ik je vandaag mee helpen?</p>
+        <p><span class="icon">🌿</span> Hello there! Welcome to Artificial Plants! I'm Leafie, your personal assistant.
+          How can I help you today?</p>
       </div>
     </div>
-    
+
     <!-- Module Container (hidden by default) -->
     <div class="module-container" id="module-container"></div>
-    
+
     <!-- Footer: Module Buttons and Chat Input Area -->
     <footer class="chat-footer">
       <div id="button-container" class="module-buttons">
-        <button class="nav-button" onclick="showModule('products')">Bekijk onze producten</button>
-        <button class="nav-button" onclick="showModule('findPlant')">Vind de plant die bij jou past</button>
-        <button class="nav-button" onclick="showModule('maintenance')">Onderhoudtips</button>
-        <button class="nav-button" onclick="showModule('checkOrderStatus')">Bestelstatus</button>
+        <button class="nav-button" onclick="showModule('products')">Browse our products</button>
+        <button class="nav-button" onclick="showModule('findPlant')">Find your perfect plant</button>
+        <button class="nav-button" onclick="showModule('maintenance')">Maintenance tips</button>
+        <button class="nav-button" onclick="showModule('checkOrderStatus')">Order status</button>
       </div>
       <div class="chat-input-area" id="chat-input-area">
         <div class="input-container">
-          <input type="text" id="chat-input" placeholder="Typ je vraag...">
+          <input type="text" id="chat-input" placeholder="Type your question...">
           <span class="search-icon" onclick="sendMessage()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="var(--border-color)"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </span>
         </div>
-        <button id="exit-conversation-button" onclick="exitConversation()">Gesprek afsluiten</button>
+        <button id="exit-conversation-button" onclick="exitConversation()">Exit conversation</button>
       </div>
     </footer>
   </div>
-  
+
   <script>
     // API Base URL
     const API_BASE = 'https://chatbottest-production.up.railway.app';
@@ -533,20 +597,9 @@
       }
       return `<p>${data.message}</p><ul>${tipContent}</ul>`;
     }
-    
+
     /* --- Language Texts --- */
-    let lang = 'nl';
     const texts = {
-      nl: {
-        launcherMessage: "Heb je vragen voor ons? Vraag nu direct!",
-        openChat: "Chat starten",
-        exitButton: "Gesprek afsluiten",
-        endMessage: `<p>🌿 Denk bij het kiezen van de juiste kunstplant vooral aan de hoogte en de plek waar je deze wilt plaatsen. Binnen of buiten maakt bijvoorbeeld verschil — buiten adviseren we UV-bestendige kunstplanten.</p>
-<p>👉 Kunstplant in een hoek: Grotere kunstplanten rond de 150 cm zijn vaak een mooie keuze.</p>
-<p>👉 Kunstplant op de eetkamertafel: Hier komt een compacte kunstplant van zo’n 50 centimeter beter tot zijn recht.</p>
-<p>Benieuwd naar onze bestsellers? Ontdek ze hier! 🌟</p>`,
-        inputPlaceholder: "Typ je vraag..."
-      },
       en: {
         launcherMessage: "Have some questions for us? Ask right now!",
         openChat: "Open Chat",
@@ -561,7 +614,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       updateLanguageTexts();
-      
+
       // Set up a MutationObserver on the module container to auto-scroll when new content is added
       const moduleContainer = document.getElementById('module-container');
       const observer = new MutationObserver(() => {
@@ -569,47 +622,47 @@
       });
       observer.observe(moduleContainer, { childList: true, subtree: true });
     });
-    
+
     function updateLanguageTexts() {
       const launcher = document.getElementById('chat-launcher');
       launcher.innerHTML = `
-        <div class="launcher-message">${texts.nl.launcherMessage}</div>
-        <button onclick="openConversation()">${texts.nl.openChat}</button>
+        <div class="launcher-message">${texts.en.launcherMessage}</div>
+        <button onclick="openConversation()">${texts.en.openChat}</button>
       `;
-      document.getElementById('chat-input').placeholder = texts.nl.inputPlaceholder;
-      document.getElementById('exit-conversation-button').textContent = texts.nl.exitButton;
+      document.getElementById('chat-input').placeholder = texts.en.inputPlaceholder;
+      document.getElementById('exit-conversation-button').textContent = texts.en.exitButton;
     }
-    
+
     /* --- Toggle Functions --- */
     function openConversation() {
       document.getElementById('chat-launcher').style.display = 'none';
       document.getElementById('chat-container').style.display = 'flex';
     }
-    
+
     function exitConversation() {
       document.getElementById('chat-container').style.display = 'none';
       document.getElementById('chat-launcher').innerHTML = `
         <div class="launcher-message end-message">
-          ${texts.nl.endMessage}
+          ${texts.en.endMessage}
         </div>
         <div class="launcher-message">
-          ${texts.nl.launcherMessage}
+          ${texts.en.launcherMessage}
         </div>
-        <button onclick="openConversation()">${texts.nl.openChat}</button>
+        <button onclick="openConversation()">${texts.en.openChat}</button>
       `;
       document.getElementById('chat-launcher').style.display = 'flex';
     }
-    
+
     /* --- Module View Templates --- */
     const views = {
       products: `
         <header>
-          <h1>Bekijk onze producten</h1>
-          <button class="back-btn" onclick="hideModule()">Terug</button>
+          <h1>Browse our products</h1>
+          <button class="back-btn" onclick="hideModule()">Back</button>
         </header>
-        <p class="browse-desc">Kun je aangeven voor welke woonruimte je een kunstplant zoekt, zoals de slaapkamer, badkamer of woonkamer? En heb je een voorkeur voor een specifieke stijl, zoals modern of een andere sfeer? Laat ook even weten welke hoogte je ideaal vindt. Zo kan ik je de beste aanbevelingen geven!</p>
+        <p class="browse-desc">Can you tell us which living space you're looking for an artificial plant for, such as the bedroom, bathroom, or living room? Do you have a preference for a specific style, like modern or another ambiance? Also, let us know what height would be ideal for you. This way we can give you the best recommendations!</p>
         <div class="category-select">
-          <label>Kies een categorie:</label>
+          <label>Choose a category:</label>
           <div id="category-buttons" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
         </div>
         <div id="productsCarousel" class="carousel-container">
@@ -619,51 +672,51 @@
       `,
       findPlant: `
         <header>
-          <h1>Vind de plant die bij jou past</h1>
-          <button class="back-btn" onclick="hideModule()">Terug</button>
+          <h1>Find your perfect plant</h1>
+          <button class="back-btn" onclick="hideModule()">Back</button>
         </header>
         <p class="findplant-desc">
-          Kun je aangeven voor welke woonruimte je een kunstplant zoekt, zoals de slaapkamer, badkamer of woonkamer? En heb je een voorkeur voor een specifieke stijl, zoals modern of een andere sfeer? Laat ook even weten welke hoogte je ideaal vindt. Zo kan ik je de beste aanbevelingen geven!
+          Can you tell us which living space you're looking for an artificial plant for, such as the bedroom, bathroom, or living room? Do you have a preference for a specific style, like modern or another ambiance? Also, let us know what height would be ideal for you. This way we can give you the best recommendations!
         </p>
         <div class="find-plant-form single-field">
-          <input type="text" id="fp-query" placeholder="Bijv. binnen, klein, modern">
-          <button class="find-plant-btn" onclick="findPlant()">Vind mijn perfecte plant</button>
+          <input type="text" id="fp-query" placeholder="E.g. indoor, small, modern">
+          <button class="find-plant-btn" onclick="findPlant()">Find my perfect plant</button>
         </div>
         <div id="find-plant-results" class="find-plant-results"></div>
       `,
       maintenance: `
         <header>
-          <h1>Onderhoudtips</h1>
-          <button class="back-btn" onclick="hideModule()">Terug</button>
+          <h1>Maintenance Tips</h1>
+          <button class="back-btn" onclick="hideModule()">Back</button>
         </header>
-        <p>Kun je specifieker aangeven waar je vraag over het onderhoud van de kunstplant precies over gaat? Denk bijvoorbeeld aan stofvrij houden, het opfrissen van de bladeren of de beste plek om ze neer te zetten. Zo kan ik je gerichter advies geven!</p>
+        <p>Can you be more specific about your question regarding the maintenance of artificial plants? Think, for example, about keeping them dust-free, refreshing the leaves, or the best place to put them. This way we can give you more targeted advice!</p>
         <div style="margin-bottom:20px;">
-          <h3>Algemene Onderhoudstip</h3>
+          <h3>Common Maintenance Questions</h3>
           <div id="maintenance-buttons" style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="maintenance-btn" data-topic="cleaning">Hoe maak je kunstplanten schoon?</button>
-            <button class="maintenance-btn" data-topic="uv_protection">Waar moet je op letten bij buitenplanten?</button>
-            <button class="maintenance-btn" data-topic="durability">Zijn de kunstplanten duurzaam?</button>
+            <button class="maintenance-btn" data-topic="cleaning">How do you clean artificial plants?</button>
+            <button class="maintenance-btn" data-topic="uv_protection">What should you consider for outdoor plants?</button>
+            <button class="maintenance-btn" data-topic="duurzaam">Are artificial plants sustainable?</button>
           </div>
         </div>
         <div style="margin-bottom:20px;">
-          <h3 for="plant-maintenance-input">Heb je een andere vraag over onderhoud?</h3>
-          <input type="text" id="plant-maintenance-input" class="maintenance-input" placeholder="Stel hier je vraag">
-          <button id="get-plant-maintenance">Haal Onderhoudstip op</button>
+          <h3 for="plant-maintenance-input">Do you have another question about maintenance?</h3>
+          <input type="text" id="plant-maintenance-input" class="maintenance-input" placeholder="Ask your question here">
+          <button id="get-plant-maintenance">Get maintenance tip</button>
         </div>
         <div id="maintenance-result" style="margin-top:20px;"></div>
       `,
       checkOrderStatus: `
         <header>
-          <h1>Bestelstatus</h1>
-          <button class="back-btn" onclick="hideModule()">Terug</button>
+          <h1>Order Status</h1>
+          <button class="back-btn" onclick="hideModule()">Back</button>
         </header>
-        <p>Deze module is in aanbouw.</p>
+        <p>This module is under construction.</p>
       `
     };
-    
+
     function showModule(moduleName) {
       const moduleContainer = document.getElementById('module-container');
-      moduleContainer.innerHTML = views[moduleName] || `<p>Module niet gevonden.</p>`;
+      moduleContainer.innerHTML = views[moduleName] || `<p>Module not found.</p>`;
       moduleContainer.style.display = 'block';
       if (moduleName === 'products') { initProductsView(); }
       if (moduleName === 'maintenance') { initMaintenanceView(); }
@@ -671,22 +724,22 @@
         // For the updated view, no extra width is needed since it's a single field
       }
     }
-    
+
     function hideModule() {
       document.getElementById('module-container').style.display = 'none';
     }
-    
+
     /* --- Chat Functions --- */
     function appendChatMessage(sender, messageText) {
       const chatWindow = document.getElementById('chat-window');
       const messageDiv = document.createElement('div');
       messageDiv.classList.add('chat-message', sender === 'user' ? 'user-message' : 'bot-message');
-      const icon = sender === 'user' ? '🧑' : '🍃';
+      const icon = sender === 'user' ? '👤' : '🌿';
       messageDiv.innerHTML = `<p><span class="icon">${icon}</span> ${messageText}</p>`;
       chatWindow.appendChild(messageDiv);
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
-    
+
     async function sendMessage() {
       const inputField = document.getElementById('chat-input');
       const question = inputField.value.trim();
@@ -703,23 +756,23 @@
           const data = await response.json();
           appendChatMessage('bot', data.response);
         } else {
-          appendChatMessage('bot', 'Oeps, er is iets misgegaan!');
+          appendChatMessage('bot', 'Oops, something went wrong!');
         }
       } catch (error) {
-        console.error('Fout:', error);
-        appendChatMessage('bot', 'Netwerkfout, probeer het later opnieuw.');
+        console.error('Error:', error);
+        appendChatMessage('bot', 'Network error, please try again later.');
       }
     }
-    
+
     /* --- Products View Functions --- */
     function initProductsView() {
       const categoryMapping = {
-        "flowers": "Bloemen",
-        "succulents": "Vetplanten",
-        "trees": "Bomen",
-        "indoor": "Binnen",
-        "office": "Kantoor",
-        "outdoors": "Buiten"
+        "flowers": "Flowers",
+        "succulents": "Succulents",
+        "trees": "Trees",
+        "indoor": "Indoor",
+        "office": "Office",
+        "outdoors": "Outdoors"
       };
       fetch(`${API_BASE}/products/categories`)
         .then(res => res.json())
@@ -736,14 +789,14 @@
               fetch(`${API_BASE}/products/list?category=${encodeURIComponent(cat)}`)
                 .then(res => res.json())
                 .then(data => displayProducts(data.products))
-                .catch(error => console.error('Fout bij het ophalen van producten:', error));
+                .catch(error => console.error('Error retrieving products:', error));
             });
             categoryButtonsDiv.appendChild(btn);
           });
         })
-        .catch(error => console.error('Fout bij het ophalen van categorieën:', error));
+        .catch(error => console.error('Error retrieving categories:', error));
     }
-    
+
     function displayProducts(products) {
       const carousel = document.getElementById('productsCarousel');
       carousel.innerHTML = '';
@@ -754,13 +807,13 @@
           <img src="${product.image}" alt="${product.name}">
           <div class="product-info">
             <h3>${product.name}</h3>
-            <p><strong>Prijs:</strong> ${product.price}</p>
-            <p><strong>Voorraad:</strong> ${product.stock}</p>
-            <p><strong>Hoogte:</strong> ${product.height}</p>
+            <p><strong>Price:</strong> ${product.price}</p>
+            <p><strong>Stock:</strong> ${product.stock}</p>
+            <p><strong>Height:</strong> ${product.height}</p>
           </div>
           <div class="actions">
-            <button class="add-btn" data-id="${product.id}">Voeg toe aan winkelwagen</button>
-            <button class="remove-btn" data-id="${product.id}" style="display: none;">Verwijder</button>
+            <button class="add-btn" data-id="${product.id}">Add to cart</button>
+            <button class="remove-btn" data-id="${product.id}" style="display: none;">Remove</button>
           </div>
         `;
         carousel.appendChild(card);
@@ -768,7 +821,7 @@
       attachCartActions();
       carousel.scrollLeft = carousel.scrollWidth;
     }
-    
+
     function attachCartActions() {
       document.querySelectorAll('.add-btn').forEach(btn => {
         btn.addEventListener('click', async (e) => {
@@ -784,8 +837,8 @@
             e.target.style.display = 'none';
             e.target.parentElement.querySelector('.remove-btn').style.display = 'inline-block';
           } catch (error) {
-            console.error('Fout bij toevoegen aan winkelwagen:', error);
-            showMessage('Fout bij toevoegen aan winkelwagen.');
+            console.error('Error adding to cart:', error);
+            showMessage('Error adding to cart.');
           }
         });
       });
@@ -803,13 +856,13 @@
             e.target.style.display = 'none';
             e.target.parentElement.querySelector('.add-btn').style.display = 'inline-block';
           } catch (error) {
-            console.error('Fout bij verwijderen uit winkelwagen:', error);
-            showMessage('Fout bij verwijderen uit winkelwagen.');
+            console.error('Error removing from cart:', error);
+            showMessage('Error removing from cart.');
           }
         });
       });
     }
-    
+
     function showMessage(msg) {
       const msgDiv = document.getElementById('message');
       msgDiv.textContent = msg;
@@ -817,8 +870,8 @@
         msgDiv.textContent = '';
       }, 3000);
     }
-    
-    /* --- Maintenance View Functions (UPDATED) --- */
+
+    /* --- Maintenance View Functions --- */
     function initMaintenanceView() {
       document.querySelectorAll('#maintenance-buttons .maintenance-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -831,8 +884,8 @@
               maintResult.scrollTop = maintResult.scrollHeight;
             })
             .catch(error => {
-              console.error('Fout bij ophalen onderhoudstip:', error);
-              document.getElementById('maintenance-result').innerHTML = `<p>Fout bij ophalen tip.</p>`;
+              console.error('Error retrieving maintenance tip:', error);
+              document.getElementById('maintenance-result').innerHTML = `<p>Error retrieving tip.</p>`;
             });
         });
       });
@@ -841,7 +894,7 @@
         plantBtn.addEventListener('click', () => {
           const question = document.getElementById('plant-maintenance-input').value.trim();
           if (!question) {
-            alert('Vul alstublieft een vraag in.');
+            alert('Please enter a question.');
             return;
           }
           fetch(`${API_BASE}/maintenance/plant/${encodeURIComponent(question)}`)
@@ -852,24 +905,24 @@
               maintResult.scrollTop = maintResult.scrollHeight;
             })
             .catch(error => {
-              console.error('Fout bij ophalen plantonderhoudstip:', error);
-              document.getElementById('maintenance-result').innerHTML = `<p>Fout bij ophalen tip.</p>`;
+              console.error('Error retrieving plant maintenance tip:', error);
+              document.getElementById('maintenance-result').innerHTML = `<p>Error retrieving tip.</p>`;
             });
         });
       }
     }
-    
-    /* --- Updated Find Perfect Plant Functions --- */
+
+    /* --- Find Perfect Plant Functions --- */
     function findPlant() {
       const query = document.getElementById('fp-query').value.trim();
       if (!query) {
-        alert('Vul alstublieft je voorkeuren in.');
+        alert('Please enter your preferences.');
         return;
       }
       // Expecting the query in the format: "location, size, style"
       const parts = query.split(',').map(part => part.trim().toLowerCase());
       if (parts.length !== 3) {
-        alert('Voer alstublieft drie waarden in: locatie, grootte en stijl, gescheiden door komma\'s.');
+        alert('Please enter three values: location, size, and style, separated by commas.');
         return;
       }
       const [location, size, style] = parts;
@@ -878,21 +931,21 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ location, size, style })
       })
-      .then(res => res.json())
-      .then(data => {
-        displayPlantResults(data);
-      })
-      .catch(error => {
-        console.error('Fout bij zoeken naar plant:', error);
-        document.getElementById('find-plant-results').innerHTML = `<p>Fout bij zoeken naar plant.</p>`;
-      });
+        .then(res => res.json())
+        .then(data => {
+          displayPlantResults(data);
+        })
+        .catch(error => {
+          console.error('Error finding plant:', error);
+          document.getElementById('find-plant-results').innerHTML = `<p>Error searching for plant.</p>`;
+        });
     }
-    
+
     function displayPlantResults(plants) {
       const resultsDiv = document.getElementById('find-plant-results');
       resultsDiv.innerHTML = '';
       if (plants.length === 0 || (plants[0] && plants[0].message)) {
-        resultsDiv.innerHTML = `<p>${plants[0].message || 'Geen overeenkomsten gevonden.'}</p>`;
+        resultsDiv.innerHTML = `<p>${plants[0].message || 'No matches found.'}</p>`;
         return;
       }
       plants.forEach(plant => {
@@ -903,19 +956,27 @@
           <img src="${imageUrl}" alt="${plant.name}">
           <div class="plant-info">
             <h3>${plant.name}</h3>
-            <p><strong>Locatie:</strong> ${plant.location}</p>
-            <p><strong>Grootte:</strong> ${plant.size}</p>
-            <p><strong>Stijl:</strong> ${plant.style}</p>
+            <p><strong>Location:</strong> ${plant.location}</p>
+            <p><strong>Size:</strong> ${plant.size}</p>
+            <p><strong>Style:</strong> ${plant.style}</p>
           </div>
         `;
         resultsDiv.appendChild(card);
       });
       resultsDiv.scrollTop = resultsDiv.scrollHeight;
     }
-    
+
     /* --- Hide Module Container When Chat Input is Clicked --- */
     document.getElementById('chat-input').addEventListener('click', hideModule);
+    
+    // Add Enter key functionality for chat input
+    document.getElementById('chat-input').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
   </script>
 </body>
-</html>
 
+</html>
