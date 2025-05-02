@@ -264,7 +264,8 @@
       color: var(--header-text);
       align-self: flex-end;
     }
-/* --- Module-Specific Styles (unchanged) --- */
+
+    /* --- Module-Specific Styles (unchanged) --- */
     .category-select {
       margin-bottom: 25px;
       display: flex;
@@ -564,7 +565,6 @@
         <button class="nav-button" onclick="showModule('products')">Browse our products</button>
         <button class="nav-button" onclick="showModule('findPlant')">Find your perfect plant</button>
         <button class="nav-button" onclick="showModule('maintenance')">Maintenance tips</button>
-        <button class="nav-button" onclick="showModule('checkOrderStatus')">Order status</button>
       </div>
       <div class="chat-input-area" id="chat-input-area">
         <div class="input-container">
@@ -621,6 +621,14 @@
         moduleContainer.scrollTop = moduleContainer.scrollHeight;
       });
       observer.observe(moduleContainer, { childList: true, subtree: true });
+      
+      // Add Enter key functionality for chat input
+      document.getElementById('chat-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          sendMessage();
+        }
+      });
     });
 
     function updateLanguageTexts() {
@@ -704,13 +712,6 @@
           <button id="get-plant-maintenance">Get maintenance tip</button>
         </div>
         <div id="maintenance-result" style="margin-top:20px;"></div>
-      `,
-      checkOrderStatus: `
-        <header>
-          <h1>Order Status</h1>
-          <button class="back-btn" onclick="hideModule()">Back</button>
-        </header>
-        <p>This module is under construction.</p>
       `
     };
 
@@ -871,7 +872,7 @@
       }, 3000);
     }
 
-    /* --- Maintenance View Functions --- */
+   /* --- Maintenance View Functions --- */
     function initMaintenanceView() {
       document.querySelectorAll('#maintenance-buttons .maintenance-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -968,15 +969,6 @@
 
     /* --- Hide Module Container When Chat Input is Clicked --- */
     document.getElementById('chat-input').addEventListener('click', hideModule);
-    
-    // Add Enter key functionality for chat input
-    document.getElementById('chat-input').addEventListener('keypress', function(event) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        sendMessage();
-      }
-    });
   </script>
 </body>
-
 </html>
