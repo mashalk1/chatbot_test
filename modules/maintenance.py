@@ -4,11 +4,11 @@ import os
 
 router = APIRouter()
 
-# Predefined maintenance tips in Dutch
+# Predefined maintenance tips in English
 maintenance_tips = {
-    "cleaning": "Gebruik een zachte doek of een plumeau om stof te verwijderen. Voor een grondigere reiniging, gebruik milde zeep en water.",
-    "uv_protection": "Om vervaging te voorkomen, plaats kunstplanten in schaduwrijke gebieden of gebruik een UV-bestendige spray.",
-    "duurzaam": "Onze planten zijn gemaakt van milieuvriendelijke materialen. Overweeg om oude planten te hergebruiken in plaats van ze weg te gooien."
+    "cleaning": "Use a soft cloth or duster to remove dust. For more thorough cleaning, use mild soap and water.",
+    "uv_protection": "To prevent fading, place artificial plants in shaded areas or use a UV-resistant spray.",
+    "duurzaam": "Our plants are made from environmentally friendly materials. Consider reusing old plants instead of throwing them away."
 }
 
 @router.get("/maintenance/{topic}")
@@ -16,12 +16,12 @@ def get_maintenance_tips(topic: str):
     topic = topic.lower()
     if topic in maintenance_tips:
         return {
-            "message": f"Hier is wat je moet weten over {topic.replace('_', ' ')}:",
+            "message": f"Here's what you need to know about {topic.replace('_', ' ')}:",
             "tip": maintenance_tips[topic]
         }
     else:
         return {
-            "message": "Sorry, ik heb geen informatie over dit onderwerp. Probeer cleaning, uv_protection of duurzaam ."
+            "message": "Sorry, I don't have information on this topic. Try cleaning, uv_protection, or durability."
         }
 
 @router.get("/maintenance/plant/{plant_name}")
@@ -31,20 +31,19 @@ def get_plant_maintenance(plant_name: str):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "Je bent een expert op plantenonderhoud."},
-            {"role": "user", "content": f"Hoe onderhoud ik {plant_name}?"}
+            {"role": "system", "content": "You are an expert on plant maintenance."},
+            {"role": "user", "content": f"How do I maintain {plant_name}?"}
         ]
     )
     
     tip = response["choices"][0]["message"]["content"]
     return {
-        "message": f"Hier is wat je moet weten over het onderhoud van {plant_name}:",
+        "message": f"Here's what you need to know about maintaining {plant_name}:",
         "tip": tip
     }
 
-# Zorg voor compatibiliteit met app.py
+# Ensure compatibility with app.py
 from fastapi import FastAPI
 
 app = FastAPI()
 app.include_router(router)
-
