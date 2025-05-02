@@ -53,32 +53,31 @@ async def query_faiss_endpoint(request: QueryRequest):
     - Checks for greetings and responds accordingly.
     - Searches the FAISS index for context.
     - Constructs a prompt and retrieves an answer from GPT-4.
-    The response will always be in Dutch.
     """
     try:
         user_query = request.query.strip().lower()
         greetings = ["hello", "hi", "hey", "good morning", "good evening", "good afternoon"]
         
         if any(greet in user_query for greet in greetings):
-            return {"response": "Hallo! Hoe kan ik je helpen met planten van Neverleafs? 🌿"}
+            return {"response": "Hello! How can I help you with artificial plants? 🌿"}
         
         best_match = search_faiss(user_query)
 
         if best_match:
             context = best_match[0]
-            prompt = (f"Je bent een expert op het gebied van planten van Neverleafs.nl. "
-                      f"Op basis van de volgende context: {context}, "
-                      f"geef een korte en bondige beantwoording in het Nederlands voor de volgende vraag: {user_query}")
+            prompt = (f"You are an expert in artificial plants from ArtificialPlants.com. "
+                      f"Based on the following context: {context}, "
+                      f"provide a short and concise answer in English to the following question: {user_query}")
         else:
-            prompt = (f"Je bent een expert op het gebied van planten van Neverleafs.nl. "
-                      f"Geef een korte en bondige beantwoording in het Nederlands voor de volgende vraag: {user_query}")
+            prompt = (f"You are an expert in artificial plants from ArtificialPlants.com. "
+                      f"Provide a short and concise answer in English to the following question: {user_query}")
 
         response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
                 {
                     "role": "system", 
-                    "content": "Je bent een expert op het gebied van planten van Neverleafs.nl. Geef altijd een beknopt en behulpzaam antwoord in het Nederlands."
+                    "content": "You are an expert in artificial plants from ArtificialPlants.com. Always provide concise and helpful answers in English."
                 },
                 {"role": "user", "content": prompt}
             ],
@@ -89,4 +88,3 @@ async def query_faiss_endpoint(request: QueryRequest):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
