@@ -6,16 +6,14 @@ from modules.qa import router as qa_router
 from modules.products import router as products_router
 from modules.find_plant import router as find_plant_router
 from modules.maintenance import router as maintenance_router
-from modules.cart import router as cart_router  # Import Cart router
+from modules.cart import router as cart_router
 from fastapi.staticfiles import StaticFiles
-from modules.orderstatus import router as orderstatus_router
 
 app = FastAPI()
 
 origins = [
     "https://chatbottest-production.up.railway.app",  
 ]
-
 
 # Enable CORS
 app.add_middleware(
@@ -34,15 +32,13 @@ def serve_index():
 # Mount the static directory to serve images, CSS, JS, etc.
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Include routers
-app.include_router(orderstatus_router)
+# Include routers - removed orderstatus_router
 app.include_router(qa_router)
 app.include_router(products_router)
 app.include_router(find_plant_router)
 app.include_router(maintenance_router)
-app.include_router(cart_router)  # Include cart API
+app.include_router(cart_router)
 
 @app.get("/favicon.ico")
 def favicon():
     return FileResponse(os.path.join("static", "images"))
-
