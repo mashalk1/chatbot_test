@@ -25,6 +25,46 @@
       --font-family: 'Montserrat', sans-serif;
     }
 
+    typing-indicator {
+    display: flex;
+    align-items: center;
+  }
+
+  .typing-indicator .dots {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    margin-left: 4px;
+  }
+
+  .typing-indicator .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: var(--border-color);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: typingAnimation 1.4s infinite ease-in-out;
+  }
+
+  .typing-indicator .dot:nth-child(1) {
+    animation-delay: 0s;
+  }
+
+  .typing-indicator .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes typingAnimation {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
     /* --- Global Reset & Base Font Size --- */
     * {
       box-sizing: border-box;
@@ -741,30 +781,53 @@
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
-    async function sendMessage() {
-      const inputField = document.getElementById('chat-input');
-      const question = inputField.value.trim();
-      if (!question) return;
-      appendChatMessage('user', question);
-      inputField.value = '';
-      try {
-        const response = await fetch(`${API_BASE}/query`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: question })
-        });
-        if (response.ok) {
-          const data = await response.json();
-          appendChatMessage('bot', data.response);
-        } else {
-          appendChatMessage('bot', 'Oops, something went wrong!');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        appendChatMessage('bot', 'Network error, please try again later.');
-      }
+   async function sendMessage() {
+  const inputField = document.getElementById('chat-input');
+  const question = inputField.value.trim();
+  if (!question) return;
+  
+  // Add user message to chat
+  appendChatMessage('user', question);
+  inputField.value = '';
+  
+  // Add typing indicator
+  const chatWindow = document.getElementById('chat-window');
+  const typingDiv = document.createElement('div');
+  typingDiv.classList.add('chat-message', 'bot-message', 'typing-indicator');
+  typingDiv.innerHTML = `
+    <p><span class="icon">🌿</span> <span class="dots">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </span></p>
+  `;
+  chatWindow.appendChild(typingDiv);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+  
+  try {
+    const response = await fetch(`${API_BASE}/query`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: question })
+    });
+    
+    // Remove typing indicator before adding bot response
+    chatWindow.removeChild(typingDiv);
+    
+    if (response.ok) {
+      const data = await response.json();
+      appendChatMessage('bot', data.response);
+    } else {
+      appendChatMessage('bot', 'Oops, something went wrong!');
     }
-
+  } catch (error) {
+    // Also remove typing indicator in case of error
+    chatWindow.removeChild(typingDiv);
+    
+    console.error('Error:', error);
+    appendChatMessage('bot', 'Network error, please try again later.');
+  }
+}
     /* --- Products View Functions --- */
     function initProductsView() {
       const categoryMapping = {
